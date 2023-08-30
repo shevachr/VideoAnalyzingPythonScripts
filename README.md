@@ -24,7 +24,7 @@ This script can be useful to adapt a video stream to be playable by Microsoft Me
 
 2) Get H264/AVC Video Statistics from Transport Stream
 
-The script   GetAVCVideoStatsFromTS.py (adapted to Python 2.x) is tailored to pick statistics (frame size, dts/pts. frame duration etc.) from video AVC/H.264 stream comprised in Mpeg System container ( Transport format files usually ending with '.ts'). It's worth mentioning that the frame start is detected if a video ts-packet contains the PES header with the timestamp DTS (to avoid counting of frame slices).
+The script   GetAVCVideoStatsFromTS.py (adapted to Python 2.x) and GetAVCVideoStatsFromTSVer3.py (adapted to Python 3.x) are tailored to pick statistics (frame size, dts/pts. frame duration etc.) from video AVC/H.264 stream comprised in Mpeg System container ( Transport format files usually ending with '.ts'). It's worth mentioning that the frame start is detected if a video ts-packet contains the PES header with the timestamp DTS (to avoid counting of frame slices).
 
 Usage:
 
