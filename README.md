@@ -85,7 +85,7 @@ Video Size in bytes     17415224
 
 HEVC Case:
 
-The script GetPictureStatsHevc.py gathers and prints frame starts and offsets (in hex) as well as frame types.
+The script GetPictureStatsHevcVer3.py (adapted to python 3.x) gathers and prints frame starts and offsets (in hex) as well as frame types.
 
 Usage:
 
@@ -95,7 +95,8 @@ Usage:
 
 
 Example [print 10 frames]
-       python GetPictureStatsHevc.py  -i test.h265 -n 10
+
+       python GetPictureStatsHevcVer3.py  -i test.h265 -n 10
 
 idr                        0            f8
 
