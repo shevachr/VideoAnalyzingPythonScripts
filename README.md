@@ -167,3 +167,115 @@ Notes:
 the first column is frame type: 'idr' or 'pb' (meaning P, B or non-IDR  I-frames).
 the second column is frame start offset in hex.
 the third column is frame size (in hex).
+
+
+4) Get PSNR, SSIM and VIFP (Visual Information Fidelity) with 'sewar' python module
+
+The ‘sewar’ python package contains different image and video quality metrics (PSNR,SSIM,MS-SSIM,VIFP etc.).
+
+To install ‘sewar’ type: pip install sewar
+
+The scripts GetPsnr.py , GetSSIM.py and GetVifp.py take as input reference and deformed yuv420p@8bpp video sequences and computes PSNR, SSIM and VIFP (Visual Information Fidelity) score per picture.
+
+Usage:
+
+-f                reference yuv-sequence (yuv420p@8bpp)
+
+-d               deformed yuv-sequence (yuv420p@8bpp) 
+
+-n               number of frames to process, if 0 then all frames, default 0
+
+--width      width in pixels
+
+--height     height in pixels
+
+ 
+
+Example [ compute psnr values of first 10 frames]
+
+python GetPsnr.py --width 1920 --height 1080 -f Fifa17_1920x1080.yuv -d fifa_hp_cbr16_10M.yuv -n 10
+
+
+frame 0, psnr 30.53
+
+frame 1, psnr 32.48
+
+frame 2, psnr 33.20
+
+frame 3, psnr 34.46
+
+frame 4, psnr 33.86
+
+frame 5, psnr 33.63
+
+frame 6, psnr 33.35
+
+frame 7, psnr 33.09
+
+frame 8, psnr 32.88
+
+frame 9, psnr 32.60
+
+average psnr 33.01
+
+ 
+
+Example [ compute SSIM values of first 10 frames]
+
+python GetSsim.py --width 1920 --height 1080 -f Fifa17_1920x1080.yuv -d fifa_hp_cbr16_10M.yuv -n 10
+
+
+frame 0, ssim 0.84
+
+frame 1, ssim 0.87
+
+frame 2, ssim 0.89
+
+frame 3, ssim 0.91
+
+frame 4, ssim 0.90
+
+frame 5, ssim 0.90
+
+frame 6, ssim 0.90
+
+frame 7, ssim 0.90
+
+frame 8, ssim 0.89
+
+frame 9, ssim 0.89
+
+average ssim 0.89
+
+ 
+
+Example [ compute VIFP scores of first 10 frames]
+
+python GetVifp.py --width 1920 --height 1080 -f Fifa17_1920x1080.yuv -d fifa_hp_cbr16_10M.yuv -n 10
+
+
+frame 0, vifp 0.29
+
+frame 1, vifp 0.36
+
+frame 2, vifp 0.40
+
+frame 3, vifp 0.44
+
+frame 4, vifp 0.43
+
+frame 5, vifp 0.43
+
+frame 6, vifp 0.43
+
+frame 7, vifp 0.42
+
+frame 8, vifp 0.42
+
+frame 9, vifp 0.41
+
+average vifp 0.40
+
+Note: to get (or to extract) yuv-sequence from encoded stream i use ffmpeg tool:
+
+ffmpeg -i fifa_hp_cbr16_15M.h264 -pixel_format yuv420p -frames 100 -y fifa_hp_cbr16_15M.yuv
