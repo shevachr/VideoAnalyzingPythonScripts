@@ -173,6 +173,7 @@ the second column is frame start offset in hex.
 
 the third column is frame size (in hex).
 
+<br>
 
 **4) Get PSNR, SSIM and VIFP (Visual Information Fidelity) with 'sewar' python module**
 
@@ -282,3 +283,119 @@ Usage:
 **Note:** to get (or to extract) yuv-sequence from encoded stream i use ffmpeg tool:
 
 *ffmpeg -i fifa_hp_cbr16_15M.h264 -pixel_format yuv420p -frames 100 -y fifa_hp_cbr16_15M.yuv*
+
+<br>
+
+**5) Parse Slice Header and Print Weighted Prediction Parameters, H.264**
+
+The weighted prediction was adopted by H.264/AVC. In some video sequences, in particular those containg fading between scenes, the current picture  is more strongly correlated to a reference picture scaled by a weighting factor.
+
+The python script **PrintWeightsH264**  gets as input H.264/AVC stream and parses SPS, PPS and slice headers. The script prints the weghted prediction information if it’s present in the slice header.
+
+Usage:
+
+-i         input h264-file
+
+-n        number frames to process, if 0 then the whole stream processed, default 0
+
+-v        verbose mode, print SPS and PPS info (default false)
+<br>
+**Example [encode 4 frames in verbose mode (i.e. printing SPS and PPS)]:**
+
+*python PrintWeightsH264.py    -i test.h264    -n 3     -v*
+
+***SPS***
+
+*profile_idc 100*
+
+*level_idc    50*
+
+*sps_id          0*
+
+*log2_max_frame_num 4*
+
+*log2_max_pic_order_cnt 10*
+
+*max_num_ref_frames 1*
+
+*gaps_in_frame_num_value_allowed_flag 0*
+
+*pic_width_in_mbs 120*
+
+*pic_width_in_mbs 68*
+
+*frame_mbs_only_flag 1*
+
+*direct_8x8_inference_flag 1*
+
+***PPS***
+
+*pps_id 0*
+
+*sps_id 0*
+
+*bottom_field_pic_order_in_frame_present_flag 0*
+
+*num_ref_idx_l0 1*
+
+*num_ref_idx_l1 1*
+
+*weighted_pred_flag 1*
+
+*weighted_bipred_idc 0*
+
+*pic_init_qp 26*
+
+*chroma_qp_index_offset 0*
+
+*deblocking_filter_control_present_flag 0*
+
+*constrained_intra_pred_flag 0*
+
+***Frame 0***
+
+
+*Slice*
+
+*first_mb 0*
+
+*slice type I*
+
+*pps_id 0*
+
+*frame_num 0*
+
+*idr_idx 0*
+
+*POC 0*
+
+***Frame 1***
+
+
+*Slice*
+
+*first_mb 0*
+
+*slice type P*
+
+*pps_id 0*
+
+*frame_num 1*
+
+*POC 2*
+
+*override flag 0*
+
+*ref_pic_list_modification_flag_l0 0*
+
+***luma_log2_weight_denom 5***
+
+***chroma_log2_weight_denom 5***
+
+***luma_weight_l0_flag 1***
+
+***luma_weight_l0 33***
+
+***luma_offset_l0 -2***
+
+***chroma_weight_l0_flag 0***
