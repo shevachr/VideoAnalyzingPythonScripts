@@ -1,12 +1,12 @@
-# VideoAnalyzingPythonScripts
+# Video Analyzing Python  Scripts
 
-Python scripts to analyze video files
+**Python scripts to analyze video files**
 
-1) The script RemoveSeiInH264Stream.py  tailored to remove SEI messages specified by sei_type (e.g. sei_type=0 is buffering period SEI message).
+**1) The script RemoveSeiInH264Stream.py**  
 
-Note: with ffmpeg you can remove all SEI NALUs regardless to sei_type:
+tailored to remove SEI messages specified by sei_type (e.g. sei_type=0 is buffering period SEI message).
 
-ffmpeg -i test.mp4 -c:v copy  -c:a copy   -bsf:v 'filter_units=remove_types=6'   test_nosei.mp4
+**Note**: with ffmpeg you can remove all SEI NALUs regardless to sei_type:  *ffmpeg -i test.mp4 -c:v copy  -c:a copy   -bsf:v 'filter_units=remove_types=6'   test_nosei.mp4*
 
 
 reminder: nal-type of SEI message is 6 in h264
@@ -15,19 +15,19 @@ The removal process of the python script  is not in-place therefore the output 
 
 If the input stream does not contain a specified sei_type then no output stream is generated. Notice that most of SEI messages carry auxiliary information and can be removed from the stream (although the appearence of video might be affected in some cases).
 
-Example [ removal of SEI messages with sei_type=5 ]: python RemoveSeiInH264Stream.py out.h264  5  out1.h264
+**Example [ removal of SEI messages with sei_type=5 ]**: *python RemoveSeiInH264Stream.py out.h264  5  out1.h264*
 
 This script can be useful to adapt a video stream to be playable by Microsoft Media Player (since SEI bueffering period prior to SPS makes the stream not playable.
  
- 
+ <br>
 
  
 
-2) Get H264/AVC Video Statistics from Transport Stream
+**2) Get H264/AVC Video Statistics from Transport Stream**
 
-The script   GetAVCVideoStatsFromTS.py (adapted to Python 2.x) and GetAVCVideoStatsFromTSVer3.py (adapted to Python 3.x) are tailored to pick statistics (frame size, dts/pts. frame duration etc.) from video AVC/H.264 stream comprised in Mpeg System container ( Transport format files usually ending with '.ts'). It's worth mentioning that the frame start is detected if a video ts-packet contains the PES header with the timestamp DTS (to avoid counting of frame slices).
+The script **GetAVCVideoStatsFromTS.py** (adapted to Python 2.x) and **GetAVCVideoStatsFromTSVer3.py** (adapted to Python 3.x) are tailored to pick statistics (frame size, dts/pts. frame duration etc.) from video AVC/H.264 stream comprised in Mpeg System container ( Transport format files usually ending with '.ts'). It's worth mentioning that the frame start is detected if a video ts-packet contains the PES header with the timestamp DTS (to avoid counting of frame slices).
 
-Usage:
+**Usage:**
 
  -i           input ts-file, a section of ts-stream can be provided (even without SPS/PPS, unlike to 'ffmpeg')
  
@@ -35,57 +35,59 @@ Usage:
  
  -a          ignore AUD (Access Unit Delimiter) violations (AUD is mandatory in Transport Stream but sometimes AUDs are absent and most of players copes with that violation),   default  false
  
-  -p          print progress  bar (the length is 80), default false. If verbose is ON then the progress bar disappears. 
+ -p          print progress  bar (the length is 80), default false. If verbose is ON then the progress bar disappears. 
 
-Example [Print Number of detected frames, if AUD is absent a corresponding error reported  ]
+**Example [Print Number of detected frames, if AUD is absent a corresponding error reported  ]**
 
 python GetAVCVideoStatsFromTS.py -i test.ts
-Number of Frames        900
-Video Size in bytes     17415224
+
+*Number of Frames        900*
+
+*Video Size in bytes     17415224*
 
 
-Example [Print Frame Statistics ignoring AUD violations, verbose mode on  ]
+**Example [Print Frame Statistics ignoring AUD violations, verbose mode on  ]**
 
 
-python GetAVCVideoStatsFromTS.py -i test.ts -a -v
+*python GetAVCVideoStatsFromTS.py -i test.ts -a -v*
 
-0   Size  50711, dts  126000,   pts  126000
+*0   Size  50711, dts  126000,   pts  126000*
 
-1   Size  4517, dts  129600,   pts  129600, frame duration 40.00
+*1   Size  4517, dts  129600,   pts  129600, frame duration 40.00*
 
-2   Size  8079, dts  132600,   pts  132600, frame duration 33.33
+*2   Size  8079, dts  132600,   pts  132600, frame duration 33.33*
 
 .....
 
-896   Size  19537, dts  2814573,   pts  2814573, frame duration 33.33
+*896   Size  19537, dts  2814573,   pts  2814573, frame duration 33.33*
 
-897   Size  23225, dts  2817573,   pts  2817573, frame duration 33.33
+*897   Size  23225, dts  2817573,   pts  2817573, frame duration 33.33*
 
-898   Size  1622, dts  2820573,   pts  2820573, frame duration 33.33
+*898   Size  1622, dts  2820573,   pts  2820573, frame duration 33.33*
 
-899   Size  28580, dts  2823573,   pts  2823573, frame duration 33.33
-
-
-Minimal DTS diff (in ms)  33.32, attained at frame 17
-
-Minimal PTS diff (in ms)  33.32, attained at frame 17
-
-Maximal DTS diff (in ms)  40.00, attained at frame 0
+*899   Size  28580, dts  2823573,   pts  2823573, frame duration 33.33*
 
 
-Number of Frames        900
-Video Size in bytes     17415224
+*Minimal DTS diff (in ms)  33.32, attained at frame 17*
+
+*Minimal PTS diff (in ms)  33.32, attained at frame 17*
+
+*Maximal DTS diff (in ms)  40.00, attained at frame 0*
 
 
+*Number of Frames        900*
+*Video Size in bytes     17415224*
 
 
+<br>
+<br>
 
 
-3) Get Picture Statistics From HEVC/H.264 Elementary Stream
+**3) Get Picture Statistics From HEVC/H.264 Elementary Stream**
 
-HEVC Case:
+**HEVC Case:**
 
-The script GetPictureStatsHevcVer3.py (adapted to python 3.x) gathers and prints frame starts and offsets (in hex) as well as frame types.
+The script **GetPictureStatsHevcVer3.py** (adapted to python 3.x) gathers and prints frame starts and offsets (in hex) as well as frame types.
 
 Usage:
 
@@ -94,32 +96,32 @@ Usage:
 -n    maximal number of frames to process, if 0 then the whole file processed, (default 0)
 
 
-Example [print 10 frames]
+**Example [print 10 frames]**
 
-       python GetPictureStatsHevcVer3.py  -i test.h265 -n 10
+       *python GetPictureStatsHevcVer3.py  -i test.h265 -n 10*
 
-idr                        0            f8
+*idr                        0            f8*
 
-pb                        f8            3f
+*pb                        f8            3f*
 
-pb                       137            38
+*pb                       137            38*
 
-pb                       16f            38
+*pb                       16f            38*
 
-pb                       1a7           4b0
+*pb                       1a7           4b0*
 
-pb                       657           28d
+*pb                       657           28d*
 
-pb                       8e4           18c
+*pb                       8e4           18c*
 
-pb                       a70           201
+*pb                       a70           201*
 
-pb                       c71           dd2
+*pb                       c71           dd2*
 
-pb                      1a43             0
+*pb                      1a43             0*
 
 
-Notes: 
+**Notes:** 
 
 the first column is frame type: IDR, BLA, RASL, RADL or 'pb' (meaning regular frame of type TRAIL).
 
@@ -129,9 +131,9 @@ the third column is frame size (in hex). An attentive reader might notice that t
 
 
 
-H264 Case:
+**H264 Case:**
 
-The script GetPictureStatsH264.py gathers and prints frame starts and offsets (in hex) as well as frame types of h264 elementary stream.
+The script **GetPictureStatsH264.py** gathers and prints frame starts and offsets (in hex) as well as frame types of h264 elementary stream.
 
 Usage:
 
@@ -139,43 +141,46 @@ Usage:
 
 -n    maximal number of frames to process, if 0 then the whole file processed, (default 0)
 
-Example [print 10 frames]
+**Example [print 10 frames]**
 
-python GetPictureStatsH264.py -i crowd_qsv.h264 -n 10
+*python GetPictureStatsH264.py -i crowd_qsv.h264 -n 10
 
-idr 0                8e1ad
+*idr 0            8e1ad*
 
-pb 8e1ad        53618
+*pb 8e1ad        53618*
 
-pb e17c5        1a2d4
+*pb e17c5        1a2d4*
 
-pb fba99        eb02
+*pb fba99        eb02*
 
-pb 10a59b     e82d
+*pb 10a59b     e82d*
 
-pb 118dc8     2e4bd
+*pb 118dc8     2e4bd*
 
-pb 147285    d33e
+*pb 147285    d33e*
 
-pb 1545c3    69b3
+*pb 1545c3    69b3*
 
-pb 15af76     7015
+*pb 15af76     7015*
 
-pb 161f8b      // if '-n' is applied then the last frame size is omitted
+*pb 161f8b*      // if '-n' is applied then the last frame size is omitted
 
-Notes: 
+**Notes:**
+
 the first column is frame type: 'idr' or 'pb' (meaning P, B or non-IDR  I-frames).
+
 the second column is frame start offset in hex.
+
 the third column is frame size (in hex).
 
 
-4) Get PSNR, SSIM and VIFP (Visual Information Fidelity) with 'sewar' python module
+**4) Get PSNR, SSIM and VIFP (Visual Information Fidelity) with 'sewar' python module**
 
-The ‘sewar’ python package contains different image and video quality metrics (PSNR,SSIM,MS-SSIM,VIFP etc.).
+The **‘sewar’** python package contains different image and video quality metrics (PSNR,SSIM,MS-SSIM,VIFP etc.).
 
 To install ‘sewar’ type: pip install sewar
 
-The scripts GetPsnr.py , GetSSIM.py and GetVifp.py take as input reference and deformed yuv420p@8bpp video sequences and computes PSNR, SSIM and VIFP (Visual Information Fidelity) score per picture.
+The scripts **GetPsnr.py** , **GetSSIM.py** and **GetVifp.py** take as input reference and deformed yuv420p@8bpp video sequences and computes PSNR, SSIM and VIFP (Visual Information Fidelity) score per picture.
 
 Usage:
 
@@ -191,91 +196,89 @@ Usage:
 
  
 
-Example [ compute psnr values of first 10 frames]
+**Example [ compute psnr values of first 10 frames]**
 
-python GetPsnr.py --width 1920 --height 1080 -f Fifa17_1920x1080.yuv -d fifa_hp_cbr16_10M.yuv -n 10
-
-
-frame 0, psnr 30.53
-
-frame 1, psnr 32.48
-
-frame 2, psnr 33.20
-
-frame 3, psnr 34.46
-
-frame 4, psnr 33.86
-
-frame 5, psnr 33.63
-
-frame 6, psnr 33.35
-
-frame 7, psnr 33.09
-
-frame 8, psnr 32.88
-
-frame 9, psnr 32.60
-
-average psnr 33.01
-
- 
-
-Example [ compute SSIM values of first 10 frames]
-
-python GetSsim.py --width 1920 --height 1080 -f Fifa17_1920x1080.yuv -d fifa_hp_cbr16_10M.yuv -n 10
+*python GetPsnr.py --width 1920 --height 1080 -f Fifa17_1920x1080.yuv -d fifa_hp_cbr16_10M.yuv -n 10*
 
 
-frame 0, ssim 0.84
+*frame 0, psnr 30.53*
 
-frame 1, ssim 0.87
+*frame 1, psnr 32.48*
 
-frame 2, ssim 0.89
+*frame 2, psnr 33.20*
 
-frame 3, ssim 0.91
+*frame 3, psnr 34.46*
 
-frame 4, ssim 0.90
+*frame 4, psnr 33.86*
 
-frame 5, ssim 0.90
+*frame 5, psnr 33.63*
 
-frame 6, ssim 0.90
+*frame 6, psnr 33.35*
 
-frame 7, ssim 0.90
+*frame 7, psnr 33.09*
 
-frame 8, ssim 0.89
+*frame 8, psnr 32.88*
 
-frame 9, ssim 0.89
+*frame 9, psnr 32.60*
 
-average ssim 0.89
+*average psnr 33.01*
 
  
 
-Example [ compute VIFP scores of first 10 frames]
+**Example [ compute SSIM values of first 10 frames]**
 
-python GetVifp.py --width 1920 --height 1080 -f Fifa17_1920x1080.yuv -d fifa_hp_cbr16_10M.yuv -n 10
+*python GetSsim.py --width 1920 --height 1080 -f Fifa17_1920x1080.yuv -d fifa_hp_cbr16_10M.yuv -n 10
 
+*frame 0, ssim 0.84*
 
-frame 0, vifp 0.29
+*frame 1, ssim 0.87*
 
-frame 1, vifp 0.36
+*frame 2, ssim 0.89*
 
-frame 2, vifp 0.40
+*frame 3, ssim 0.91*
 
-frame 3, vifp 0.44
+*frame 4, ssim 0.90*
 
-frame 4, vifp 0.43
+*frame 5, ssim 0.90*
 
-frame 5, vifp 0.43
+*frame 6, ssim 0.90*
 
-frame 6, vifp 0.43
+*frame 7, ssim 0.90*
 
-frame 7, vifp 0.42
+*frame 8, ssim 0.89*
 
-frame 8, vifp 0.42
+*frame 9, ssim 0.89*
 
-frame 9, vifp 0.41
+*average ssim 0.89*
 
-average vifp 0.40
+ 
 
-Note: to get (or to extract) yuv-sequence from encoded stream i use ffmpeg tool:
+**Example [ compute VIFP scores of first 10 frames]**
 
-ffmpeg -i fifa_hp_cbr16_15M.h264 -pixel_format yuv420p -frames 100 -y fifa_hp_cbr16_15M.yuv
+*python GetVifp.py --width 1920 --height 1080 -f Fifa17_1920x1080.yuv -d fifa_hp_cbr16_10M.yuv -n 10*
+
+*frame 0, vifp 0.29*
+
+*frame 1, vifp 0.36*
+
+*frame 2, vifp 0.40*
+
+*frame 3, vifp 0.44*
+
+*frame 4, vifp 0.43*
+
+*frame 5, vifp 0.43*
+
+*frame 6, vifp 0.43*
+
+*frame 7, vifp 0.42*
+
+*frame 8, vifp 0.42*
+
+*frame 9, vifp 0.41*
+
+*average vifp 0.40*
+
+**Note:** to get (or to extract) yuv-sequence from encoded stream i use ffmpeg tool:
+
+*ffmpeg -i fifa_hp_cbr16_15M.h264 -pixel_format yuv420p -frames 100 -y fifa_hp_cbr16_15M.yuv*
