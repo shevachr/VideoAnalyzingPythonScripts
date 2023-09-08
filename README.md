@@ -399,3 +399,57 @@ Usage:
 ***luma_offset_l0 -2***
 
 ***chroma_weight_l0_flag 0***
+
+
+**6) Count Short Start Codes (H264)**
+
+The H264/AVC spec. contains two types of start-codes:  long (32 bits, 00 00 00 01) and short (24 bits, 00 00 01)
+
+During my career, once I was faced with a peculiar h264 decoder which ignored short start-codes (and respected long start codes). This decoder could not find the slice start if the start code was short.
+
+I share the python script **CountShortStartCodesInH264.py** which detects and count short start codes in h264 file. In addtion this script counts the number of frames.
+
+
+Usage:
+
+-i          input h264 file
+
+-v         verbose mode, print offset of short start code (default false)
+
+-n         number frames to process, if 0 then the whole stream processed
+
+
+
+
+**Example:**
+
+*python CountShortStartCodesInH264.py -i  battlefield_hp_cbr16_10M.h264*
+
+*number of detected frames 557*
+
+*number of short start codes 1672*
+
+Note:  why number of start codes is greater than the number of frames? In the given stream each frame is divided into four slices. Thus each frame contains four start codes.
+
+
+
+
+**Example (process two frames in verbose mode)**
+
+
+*python CountShortStartCodesInH264.py -i battlefield_hp_cbr16_10M.h264 -n 2 -v*
+
+*short start code at offset 4467 (0x1173)*
+
+*short start code at offset 8600 (0x2198)*
+
+*short start code at offset 15524 (0x3ca4)*
+
+*short start code at offset 20005 (0x4e25)*
+
+*number of detected frames 2*
+
+*number of short start codes 4*
+
+
+
